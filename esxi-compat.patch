@@ -1,0 +1,23 @@
+Only in rust-1.66.1-esxi-compat/library/std/src/sys/unix: .os.rs.un~
+diff -ur rust-1.66.1/library/std/src/sys/unix/os.rs rust-1.66.1-esxi-compat/library/std/src/sys/unix/os.rs
+--- rust-1.66.1/library/std/src/sys/unix/os.rs    2023-01-10 19:47:05.000000000 +0100
++++ rust-1.66.1-esxi-compat/library/std/src/sys/unix/os.rs  2023-01-16 16:27:14.000000000 +0100
+@@ -350,7 +350,7 @@
+     }
+ }
+ 
+-#[cfg(any(target_os = "linux", target_os = "android", target_os = "emscripten"))]
++#[cfg(any(target_os = "android", target_os = "emscripten"))]
+ pub fn current_exe() -> io::Result<PathBuf> {
+     match crate::fs::read_link("/proc/self/exe") {
+         Err(ref e) if e.kind() == io::ErrorKind::NotFound => Err(io::const_io_error!(
+@@ -433,7 +433,7 @@
+     Err(io::const_io_error!(ErrorKind::Unsupported, "Not yet implemented!"))
+ }
+ 
+-#[cfg(target_os = "vxworks")]
++#[cfg(any(target_os = "vxworks", target_os = "linux"))]
+ pub fn current_exe() -> io::Result<PathBuf> {
+     #[cfg(test)]
+     use realstd::env;
+
